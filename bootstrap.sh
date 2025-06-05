@@ -65,10 +65,12 @@ for tool in "${CLI_TOOLS[@]}"; do
   fi
 done
 
-# Install Neovim
-if ! command -v nvim &>/dev/null; then
-  echo "Installing Neovim..."
-  sudo $PKG install -y neovim
+# Install latest Neovim via AppImage
+if ! command -v nvim &>/dev/null || [[ "$(nvim --version | head -n1 | grep -o '[0-9]\+\.[0-9]\+')" < "0.10" ]]; then
+  echo "Installing latest Neovim via AppImage..."
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  chmod u+x nvim.appimage
+  sudo mv nvim.appimage /usr/local/bin/nvim
 fi
 
 # Install NvChad (using starter template)
