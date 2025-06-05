@@ -58,8 +58,7 @@ You’ll be prompted before removing shared tools or reverting your shell.
 ## 🧪 Tested On
 
 - ✅ CentOS 8.5.2111
-- ✅ Ubuntu 22.04 LTS
-- ✅ Amazon Linux 2023 (minor tweaks may be needed)
+
 
 ---
 
