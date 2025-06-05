@@ -121,31 +121,9 @@ for tool in "${CLI_TOOLS[@]}"; do
 done
 
 # Install latest Neovim via AppImage
-if ! command -v nvim &>/dev/null || [[ "$(nvim --version | head -n1 | grep -o '[0-9]\+\.[0-9]\+')" < "0.10" ]]; then
-  echo "Installing latest Neovim via AppImage..."
-  curl -LJO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-  chmod u+x nvim.appimage
-  sudo mv nvim.appimage /usr/local/bin/nvim
-fi
+install_neovim()
 
-# Install NvChad (using starter template)
-NVIM_CONFIG="$HOME/.config/nvim"
-if [ -d "$NVIM_CONFIG" ]; then
-  echo "Backing up existing Neovim config..."
-  mv "$NVIM_CONFIG" "$NVIM_CONFIG.backup.$(date +%s)"
-fi
-
-echo "Installing NvChad starter..."
-git clone https://github.com/NvChad/starter "$NVIM_CONFIG" --depth 1
-
-# Remove .git folder to detach from the template repo
-rm -rf "$NVIM_CONFIG/.git"
-
-# Wait for Lazy.nvim to finish syncing, then install Mason packages
-echo "Syncing plugins and installing Mason packages..."
-nvim --headless \
-  +"autocmd User LazyDone ++once lua require('mason').setup(); require('mason-tool-installer').run_on_start()" \
-  +qa
+install_nvchad();
 
 # Install Tmux config (minimal)
 TMUX_CONF="$HOME/.tmux.conf"
