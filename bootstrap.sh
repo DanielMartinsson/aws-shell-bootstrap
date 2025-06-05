@@ -81,8 +81,8 @@ fi
 echo "Installing NvChad..."
 git clone https://github.com/NvChad/NvChad "$NVIM_CONFIG" --depth 1
 
-echo "Syncing NvChad plugins..."
-nvim --headless +"Lazy! sync" +qa
+echo "Initializing NvChad (first run)..."
+nvim --headless +"autocmd User VeryLazy quitall" +qa
 
 # Install Tmux config (minimal)
 TMUX_CONF="$HOME/.tmux.conf"
