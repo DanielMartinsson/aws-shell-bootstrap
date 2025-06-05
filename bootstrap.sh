@@ -2,7 +2,7 @@
 
 set -e
 
-echo "==> Bootstrapping remote shell environment..."
+echo "==> Bootstrapping remote shell environment... (version: 0.0.1)"
 
 # Detect package manager
 if command -v apt &>/dev/null; then
