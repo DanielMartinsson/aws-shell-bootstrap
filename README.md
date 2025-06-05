@@ -3,7 +3,6 @@
 A minimal shell bootstrap script to quickly set up your preferred command-line environment on remote Linux servers. Designed for developers and power users who often connect to ephemeral or freshly provisioned EC2 instances or other remote machines.
 
 This script installs:
-
 - ✅ `tmux` (terminal multiplexer)
 - ✅ `neovim` (modern Vim alternative)
 - ✅ `fzf`, `ripgrep`, `bat`, `jq`, `htop`, `ncdu` (CLI tools for productivity)
@@ -16,14 +15,13 @@ This script installs:
 
 ## 🔧 How to Use
 
-### One-liner install (recommended)
+### One-liner install (recommended):
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/DanielMartinsson/aws-shell-bootstrap/main/bootstrap.sh)
 ```
 
 This will:
-
 1. Detect your distro (Ubuntu, Debian, CentOS, RHEL, etc.)
 2. Install packages via `apt` or `yum`/`dnf`
 3. Configure Neovim and Tmux with sensible defaults
@@ -76,7 +74,10 @@ bat file    # pretty cat
 
 ## 🧪 Tested On
 
+- ✅ Ubuntu 20.04, 22.04
+- ✅ Debian 11
 - ✅ CentOS 7, CentOS 8 Stream
+- ✅ Rocky Linux 9
 
 ---
 
