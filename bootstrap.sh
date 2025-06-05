@@ -1,8 +1,63 @@
+# Function to install the latest Neovim via AppImage
+install_neovim() {
+  echo "Installing latest Neovim via AppImage..."
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  chmod u+x nvim.appimage
+  sudo mv nvim.appimage /usr/local/bin/nvim
+}
+
+# Function to install NvChad
+install_nvchad() {
+  NVIM_CONFIG="$HOME/.config/nvim"
+  if [ -d "$NVIM_CONFIG" ]; then
+    echo "Backing up existing Neovim config..."
+    mv "$NVIM_CONFIG" "$NVIM_CONFIG.backup.$(date +%s)"
+  fi
+
+  echo "Installing NvChad starter..."
+  git clone https://github.com/NvChad/starter "$NVIM_CONFIG" --depth 1
+
+  # Remove .git folder to detach from the template repo
+  rm -rf "$NVIM_CONFIG/.git"
+
+  # Wait for Lazy.nvim to finish syncing, then install Mason packages
+  echo "Syncing plugins and installing Mason packages..."
+  nvim --headless \
+    +"autocmd User LazyDone ++once lua require('mason').setup(); require('mason-tool-installer').run_on_start()" \
+    +qa
+}
+
+# Check for --reset-nvim flag
+RESET_NVIM=false
+for arg in "$@"; do
+  if [ "$arg" == "--reset-nvim" ]; then
+    RESET_NVIM=true
+    break
+  fi
+done
+
+# Install or reinstall Neovim if necessary
+if $RESET_NVIM; then
+  echo "Reset flag detected. Reinstalling Neovim..."
+  install_neovim
+else
+  if ! command -v nvim &>/dev/null || [[ "$(nvim --version | head -n1 | grep -o '[0-9]\\+\\.[0-9]\\+')" < "0.10" ]]; then
+    install_neovim
+  else
+    echo "Neovim is already installed and up to date."
+  fi
+fi
+
+# Install NvChad
+install_nvchad
+
+echo "Setup complete! Open a new shell or type 'zsh' to get started."
+
 #!/usr/bin/env bash
 
 set -e
 
-echo "==> Bootstrapping remote shell environment... (version: 0.0.1)"
+echo "==> Bootstrapping remote shell environment... (version: 0.0.2)"
 
 # Detect package manager
 if command -v apt &>/dev/null; then
