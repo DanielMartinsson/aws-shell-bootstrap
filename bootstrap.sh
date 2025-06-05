@@ -7,8 +7,8 @@ echo "==> Bootstrapping remote shell environment... (version: 0.1.0)"
 # Configurable variables
 ############################
 
-USE_LAZYVIM=false  # Set to true to use LazyVim instead of NvChad
-RESET_NVIM=false   # Set with --reset-nvim flag
+USE_LAZYVIM=false # Set to true to use LazyVim instead of NvChad
+RESET_NVIM=false  # Set with --reset-nvim flag
 
 ############################
 # Helpers
@@ -152,13 +152,9 @@ install_neovim() {
 
   rm -f nvim-linux-x86_64.appimage
 
-  echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
-  echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
+  echo 'export PATH="/usr/local/bin:$PATH"' >>~/.zshrc
+  echo 'export PATH="/usr/local/bin:$PATH"' >>~/.bashrc
 }
-
-
-
-
 
 is_old_nvim() {
   if ! command -v nvim &>/dev/null; then return 0; fi
@@ -208,7 +204,11 @@ main() {
 
   setup_nvim_config
 
-  log "==> DONE! Open a new shell or run 'zsh' to start."
+  sudo usermod -s $(which zsh) $USER
+
+  log "==> DONE!"
+  log "==> If zsh has not already been ativated you can open a new shell or run 'zsh' to start."
+  log "==> Run nvim to open Neovim in all its glory."
 }
 
 main "$@"
