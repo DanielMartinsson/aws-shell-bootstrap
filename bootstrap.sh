@@ -35,13 +35,18 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 fi
 
 if [ "$SHELL" != "$(which zsh)" ]; then
-  echo "Setting zsh as default shell..."
-  chsh -s "$(which zsh)"
+  if command -v chsh &>/dev/null; then
+    echo "Setting zsh as default shell..."
+    chsh -s "$(which zsh)"
+  else
+    echo "chsh not found. You can manually change the default shell with:"
+    echo "  sudo usermod -s $(which zsh) $USER"
+  fi
 fi
 
 ZSHRC="$HOME/.zshrc"
 if ! grep -q "oh-my-zsh.sh" "$ZSHRC" 2>/dev/null; then
-  cat <<EOF >> "$ZSHRC"
+  cat <<EOF >>"$ZSHRC"
 
 # Added by bootstrap script
 export ZSH="$HOME/.oh-my-zsh"
@@ -83,7 +88,7 @@ nvim --headless +"Lazy! sync" +qa
 TMUX_CONF="$HOME/.tmux.conf"
 if [ ! -f "$TMUX_CONF" ]; then
   echo "Setting up .tmux.conf..."
-  cat <<EOF > "$TMUX_CONF"
+  cat <<EOF >"$TMUX_CONF"
 set -g mouse on
 setw -g mode-keys vi
 bind r source-file ~/.tmux.conf \; display-message "Config reloaded!"
