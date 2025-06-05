@@ -71,18 +71,24 @@ if ! command -v nvim &>/dev/null; then
   sudo $PKG install -y neovim
 fi
 
-# Install NvChad
+# Install NvChad (using starter template)
 NVIM_CONFIG="$HOME/.config/nvim"
 if [ -d "$NVIM_CONFIG" ]; then
   echo "Backing up existing Neovim config..."
   mv "$NVIM_CONFIG" "$NVIM_CONFIG.backup.$(date +%s)"
 fi
 
-echo "Installing NvChad..."
-git clone https://github.com/NvChad/NvChad "$NVIM_CONFIG" --depth 1
+echo "Installing NvChad starter..."
+git clone https://github.com/NvChad/starter "$NVIM_CONFIG" --depth 1
 
-echo "Initializing NvChad (first run)..."
-nvim --headless +"autocmd User VeryLazy quitall" +qa
+# Remove .git folder to detach from the template repo
+rm -rf "$NVIM_CONFIG/.git"
+
+# Wait for Lazy.nvim to finish syncing, then install Mason packages
+echo "Syncing plugins and installing Mason packages..."
+nvim --headless \
+  +"autocmd User LazyDone ++once lua require('mason').setup(); require('mason-tool-installer').run_on_start()" \
+  +qa
 
 # Install Tmux config (minimal)
 TMUX_CONF="$HOME/.tmux.conf"
