@@ -1,7 +1,7 @@
 # Function to install the latest Neovim via AppImage
 install_neovim() {
   echo "Installing latest Neovim via AppImage..."
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  curl -LJO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
   chmod u+x nvim.appimage
   sudo mv nvim.appimage /usr/local/bin/nvim
 }
@@ -57,7 +57,7 @@ echo "Setup complete! Open a new shell or type 'zsh' to get started."
 
 set -e
 
-echo "==> Bootstrapping remote shell environment... (version: 0.0.2)"
+echo "==> Bootstrapping remote shell environment... (version: 0.0.3)"
 
 # Detect package manager
 if command -v apt &>/dev/null; then
