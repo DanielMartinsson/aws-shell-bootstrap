@@ -1,101 +1,77 @@
 # AWS Shell Bootstrap
 
-A minimal shell bootstrap script to quickly set up your preferred command-line environment on remote Linux servers. Designed for developers and power users who often connect to ephemeral or freshly provisioned EC2 instances or other remote machines.
+> Fast-track your remote development environment with Zsh, Tmux, Neovim, and modern CLI tools.
 
-This script installs:
-- ✅ `tmux` (terminal multiplexer)
-- ✅ `neovim` (modern Vim alternative)
-- ✅ `fzf`, `ripgrep`, `bat`, `jq`, `htop`, `ncdu` (CLI tools for productivity)
-- ✅ Sensible defaults for `.tmux.conf` and `init.vim`
-- ✅ Works on **Ubuntu/Debian** and **CentOS/RHEL** systems
+This bootstrap script sets up a modern shell environment on a fresh Linux server — ideal for cloud-based development or repeatable provisioning.  
+It installs and configures:
 
-> ⚠️ Currently a placeholder for Ghosty shell — to be integrated when installable via script.
-
----
-
-## 🔧 How to Use
-
-### One-liner install (recommended):
-
-```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/DanielMartinsson/aws-shell-bootstrap/main/bootstrap.sh)
-```
-
-This will:
-1. Detect your distro (Ubuntu, Debian, CentOS, RHEL, etc.)
-2. Install packages via `apt` or `yum`/`dnf`
-3. Configure Neovim and Tmux with sensible defaults
-4. Add useful CLI tools
+- **Zsh + Oh My Zsh**
+- **Tmux** (with sensible defaults)
+- **Neovim** (AppImage extracted, no FUSE required)
+- **NvChad** (or LazyVim, optional)
+- CLI tools: `fzf`, `ripgrep`, `bat`, `jq`, `htop`, `ncdu`
 
 ---
 
-## 🧠 Typical Workflow (From Your Local Machine)
+## 🚀 Quick Start
 
-1. **Connect to the remote instance via SSH**
-
-```bash
-ssh ec2-user@your-server-ip
-```
-
-2. **Run the bootstrap script**
-
-Once logged into the remote server:
+SSH into your fresh machine and run:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/DanielMartinsson/aws-shell-bootstrap/main/bootstrap.sh)
+bash <(curl -sS https://raw.githubusercontent.com/DanielMartinsson/aws-shell-bootstrap/main/bootstrap.sh)
 ```
 
-3. **Start working immediately**
-
-```bash
-tmux        # start your multiplexer
-nvim file   # edit config or logs
-fzf         # fuzzy-find files
-rg error    # grep logs fast
-bat file    # pretty cat
-```
+> ✅ Works best on CentOS 8.5 and other RHEL-based distros.
 
 ---
 
-## 📂 Installed Tools
+## 🛠 Options
 
-| Tool     | Description                                |
-|----------|--------------------------------------------|
-| `tmux`   | Terminal multiplexer                       |
-| `nvim`   | Modern Vim alternative                     |
-| `fzf`    | Fuzzy file finder                          |
-| `ripgrep`| Fast recursive search                      |
-| `bat`    | Syntax-highlighted `cat`                   |
-| `jq`     | JSON processor                             |
-| `htop`   | Interactive process viewer                 |
-| `ncdu`   | Disk usage viewer                          |
+| Flag           | Description                                      |
+|----------------|--------------------------------------------------|
+| `--reset-nvim` | Reinstall Neovim even if already installed       |
+
+You can safely re-run the script — it will back up your existing configs.
+
+---
+
+## 🔄 Uninstall
+
+To clean up everything installed by the bootstrap, run:
+
+```bash
+bash <(curl -sS https://raw.githubusercontent.com/DanielMartinsson/aws-shell-bootstrap/main/uninstall.sh)
+```
+
+You’ll be prompted before removing shared tools or reverting your shell.
+
+---
+
+## 🧠 Notes
+
+- Neovim is installed from [neovim-releases](https://github.com/neovim/neovim-releases) and unpacked manually for compatibility with older glibc.
+- Zsh is installed and set as your login shell (or prompts if `chsh` is unavailable).
+- The script is modular and can be adapted to support LazyVim, LunarVim, or dotfile sync.
 
 ---
 
 ## 🧪 Tested On
 
-- ✅ Ubuntu 20.04, 22.04
-- ✅ Debian 11
-- ✅ CentOS 7, CentOS 8 Stream
-- ✅ Rocky Linux 9
+- ✅ CentOS 8.5.2111
+- ✅ Ubuntu 22.04 LTS
+- ✅ Amazon Linux 2023 (minor tweaks may be needed)
 
 ---
 
-## 📦 To-Do / Future Plans
+## 📂 Structure
 
-- [ ] Ghosty shell installer support
-- [ ] Optional dotfiles symlink setup
-- [ ] Add support for other distros (Alpine, Amazon Linux)
-- [ ] Install plugins for Neovim and Tmux
+```
+bootstrap.sh     # Main setup script
+uninstall.sh     # Clean-up script
+```
 
 ---
 
 ## 📜 License
 
-MIT License. Use it, change it, share it.
-
----
-
-## 💬 Feedback
-
-Open an issue or PR if you have suggestions, ideas, or improvements!
+MIT — free to use, fork, and adapt.
