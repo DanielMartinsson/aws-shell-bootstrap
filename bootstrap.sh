@@ -57,7 +57,7 @@ echo "Setup complete! Open a new shell or type 'zsh' to get started."
 
 set -e
 
-echo "==> Bootstrapping remote shell environment... (version: 0.0.3)"
+echo "==> Bootstrapping remote shell environment... (version: 0.0.4)"
 
 # Detect package manager
 if command -v apt &>/dev/null; then
@@ -123,7 +123,7 @@ done
 # Install latest Neovim via AppImage
 if ! command -v nvim &>/dev/null || [[ "$(nvim --version | head -n1 | grep -o '[0-9]\+\.[0-9]\+')" < "0.10" ]]; then
   echo "Installing latest Neovim via AppImage..."
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+  curl -LJO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
   chmod u+x nvim.appimage
   sudo mv nvim.appimage /usr/local/bin/nvim
 fi
